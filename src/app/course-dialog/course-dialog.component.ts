@@ -15,7 +15,7 @@ import { LoadingService } from '../loading/loading.service';
     // Because this component is opened by the Material framework, it exists in a
     // completely different component tree than the home component.
     // Therefore, to use the loading service, we need to inject it into the component.
-    //providers: [LoadingService] // This service will be available to this component and its children.],
+    providers: [LoadingService] // This service will be available to this component and its children.],
     // We now have two instances of the LoginService running. 
     // This is a problem because we want to use the same instance across the app.
     // Solved by adding <loading> to the course-dialog.component.html file.

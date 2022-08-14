@@ -40,6 +40,8 @@ export class HomeComponent implements OnInit {
     );
 
     // Simplified API for loading courses (any observable).
+    // This, visually, seems a bit odd but still is intereting. 
+    // On the fence about this as the above code is more readable.
     const loadCourses$ = this.loadingService.showLoaderUntilCompleted(courses$);
 
     this.beginnerCourses$ = loadCourses$
