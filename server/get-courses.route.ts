@@ -13,11 +13,12 @@ export function getAllCourses(req: Request, res: Response) {
     return;
  */
 
+// Artificial delay to simulate backend processing time
         setTimeout(() => {
 
              res.status(200).json({payload:Object.values(COURSES)});
 
-        }, 200);
+        }, 1500);
 }
 
 

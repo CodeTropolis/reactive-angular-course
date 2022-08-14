@@ -31,17 +31,23 @@ export class HomeComponent implements OnInit {
   }
 
   reloadCourses() {
+    //this.loadingService.loadingOn();
     const courses$ = this.coursesService.loadAllCourses()
     .pipe(
       map(courses => courses.sort(sortCoursesBySeqNo)),
+      // finalize is a RxJS operator that will be executed after the observable is completed or when an error occurs.
+      //finalize(() => this.loadingService.loadingOff()) 
     );
 
-    this.beginnerCourses$ = courses$
+    // Simplified API for loading courses (any observable).
+    const loadCourses$ = this.loadingService.showLoaderUntilCompleted(courses$);
+
+    this.beginnerCourses$ = loadCourses$
       .pipe(
         map(courses => courses.filter(course => course.category === 'BEGINNER'))
         );
 
-    this.advancedCourses$ = courses$
+    this.advancedCourses$ = loadCourses$ 
       .pipe(
         map(courses => courses.filter(course => course.category === 'ADVANCED'))
         );
