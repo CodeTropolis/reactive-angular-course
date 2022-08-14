@@ -6,6 +6,7 @@ import {MatDialog, MatDialogConfig} from '@angular/material/dialog';
 import {CourseDialogComponent} from '../course-dialog/course-dialog.component';
 import { CoursesService } from '../services/courses.service';
 import { LoadingService } from '../loading/loading.service';
+import { MessagesService } from '../messages/messages.service';
 
 
 @Component({
@@ -23,7 +24,8 @@ export class HomeComponent implements OnInit {
   constructor(
     private coursesService: CoursesService, 
     private loadingService: LoadingService, 
-    private dialog: MatDialog) {
+    private messagesService: MessagesService,
+    ) {
   }
 
   ngOnInit() {
@@ -35,6 +37,12 @@ export class HomeComponent implements OnInit {
     const courses$ = this.coursesService.loadAllCourses()
     .pipe(
       map(courses => courses.sort(sortCoursesBySeqNo)),
+      catchError(err => {
+        const message = "Error loading courses";
+        this.messagesService.showErrors(message);
+        console.log(message, err);
+        return throwError(err); // Return a new observable that contains the error.
+      }),
       // finalize is a RxJS operator that will be executed after the observable is completed or when an error occurs.
       //finalize(() => this.loadingService.loadingOff()) 
     );
